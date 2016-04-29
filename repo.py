@@ -5,12 +5,12 @@ from datetime import date
 
 
 def registerUrl():
-	try:
-		url ="https://api.github.com/repos/guodongxiaren/README"
-		data = urllib2.urlopen(url).read()
-		return data
-	except Exception,e:
-		print e
+    try:
+        url ="https://api.github.com/repos/guodongxiaren/README"
+        data = urllib2.urlopen(url).read()
+        return data
+    except Exception,e:
+        print e
 		
 def saveJsonFile(fileName, fileData):
 	file = open(fileName,"w")
@@ -20,17 +20,19 @@ def saveJsonFile(fileName, fileData):
 
 def parseJsonFile(fileName):
 	f = file(fileName)
-	print f
 	s = json.load(f)
 	return s
 
 def addTodayData(trend, jsonData):
 	value = json.loads(jsonData)
-	rootlist = value.keys()
-	dic = {}
-	dic['star'] = value['stargazers_count']
-	dic['fork'] = value['forks_count']
-	trend[date.today().isoformat()] = dic;
+
+	today = date.today().isoformat()
+	fork  = value['forks_count']
+	star  = value['stargazers_count']
+
+	trend["date"].append(today);
+	trend["fork"].append(fork);
+	trend["star"].append(star);
 	
 if __name__ == "__main__":
 	trend = parseJsonFile("trend.json")
