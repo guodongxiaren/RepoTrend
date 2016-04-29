@@ -6,6 +6,7 @@ from datetime import date
 class RepoTrend:
     def __init__(self):
         self.url = "https://api.github.com/repos/guodongxiaren/README"
+        # self.getRemoteData()
 
     def getRemoteData(self):
         try:
@@ -36,9 +37,9 @@ class RepoTrend:
         
 if __name__ == "__main__":
     repoTrend = RepoTrend()
-    repoTrend.parseJsonFile("trend.json")
+    repoTrend.parseJsonFile("/home/jelly/github/repotrend/trend.json")
     repoTrend.getRemoteData()
     repoTrend.addTodayData()
-    repoTrend.saveJsonFile("trend.json")
+    repoTrend.saveJsonFile("/home/jelly/github/repotrend/trend.json")
     
     
