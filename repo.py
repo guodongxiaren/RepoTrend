@@ -4,9 +4,18 @@ import json
 from datetime import date 
 
 class RepoTrend:
-    def __init__(self):
-        self.url = "https://api.github.com/repos/guodongxiaren/README"
-        # self.getRemoteData()
+    def __init__(self, config_file):
+        self.__load_config(config_file)
+
+    def __load_config(self, config_file):
+        config = file(config_file)
+        paras  = json.load(config)
+        user   = paras["user"]
+        repo   = paras["repo"]
+
+        self.url = "https://api.github.com/repos/" + user + "/" + repo
+        self.trend_file = paras["trend"] 
+
 
     def getRemoteData(self):
         try:
@@ -14,15 +23,15 @@ class RepoTrend:
         except Exception,e:
             print e
             
-    def saveJsonFile(self, fileName):
-        file = open(fileName,"w")
+    def saveJsonFile(self):
+        file = open(self.trend_file, "w")
         jsonStr = json.dumps(self.trend)
         file.write(jsonStr)
         file.close()
 
-    def parseJsonFile(self, fileName):
-        f = file(fileName)
-        self.trend = json.load(f)
+    def parseJsonFile(self):
+        trend = file(self.trend_file)
+        self.trend = json.load(trend)
 
     def addTodayData(self):
         value = json.loads(self.jsonData)
@@ -36,10 +45,10 @@ class RepoTrend:
         self.trend["star"].append(star);
         
 if __name__ == "__main__":
-    repoTrend = RepoTrend()
-    repoTrend.parseJsonFile("/home/jelly/github/repotrend/trend.json")
+    repoTrend = RepoTrend("./config.json")
+    repoTrend.parseJsonFile()
     repoTrend.getRemoteData()
     repoTrend.addTodayData()
-    repoTrend.saveJsonFile("/home/jelly/github/repotrend/trend.json")
+    repoTrend.saveJsonFile()
     
     
