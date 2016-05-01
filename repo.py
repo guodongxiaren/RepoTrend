@@ -24,23 +24,23 @@ class RepoTrend:
         elif os.path.isfile(path):
             self.path = os.path.dirname(path)
 
-    def getRemoteData(self):
+    def get_remote_data(self):
         try:
             self.jsonData = urllib2.urlopen(self.url).read()
         except Exception,e:
             print e
             
-    def saveJsonFile(self):
+    def save_json_file(self):
         file = open(self.trend_file, "w")
         jsonStr = json.dumps(self.trend)
         file.write(jsonStr)
         file.close()
 
-    def parseJsonFile(self):
+    def parse_json_file(self):
         trend = file(self.trend_file)
         self.trend = json.load(trend)
 
-    def addTodayData(self):
+    def add_today_data(self):
         value = json.loads(self.jsonData)
 
         today = date.today().isoformat()
@@ -53,18 +53,9 @@ class RepoTrend:
         
 if __name__ == "__main__":
     repoTrend = RepoTrend("./config.json")
-    repoTrend.parseJsonFile()
-    repoTrend.getRemoteData()
-    repoTrend.addTodayData()
-    repoTrend.saveJsonFile()
+    repoTrend.parse_json_file()
+    repoTrend.get_remote_data()
+    repoTrend.add_today_data()
+    repoTrend.save_json_file()
     
     
-import sys,os
-def cur_file_dir():
-     path = sys.path[0]
-     if os.path.isdir(path):
-         return path
-     elif os.path.isfile(path):
-         return os.path.dirname(path)
-
-print cur_file_dir()
