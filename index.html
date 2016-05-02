@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf8">
+    <script src="http://cdn.bootcss.com/echarts/3.0.0/echarts.common.min.js"></script>
+    <script src="http://libs.useso.com/js/jquery/1.9.1/jquery.min.js"></script>
+    <style type="text/css">
+    h1 {
+        text-align: center;
+    }
+    #main {
+        width: 600px;
+        height: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    </style>
+</head>
+<body>
+    <h1 id="repo-name"></h1>
+    <div id="main"></div>  
+    <script type="text/javascript">  
+    var myChart = echarts.init(document.getElementById('main'));
+
+    $.getJSON('trend.json', function(json) {
+        date = json.date;
+        fork = json.fork;
+        star = json.star;
+        var option = {
+            title: {
+                text: '趋势图'
+            },
+            tooltip: {},
+            legend: {
+                data:['fork', 'star']
+            },
+            xAxis: {
+                    splitLine: {show: false},
+                    data: date 
+                },
+            yAxis: {
+                    name: 'fork',
+                    type: 'value'
+                },
+            series: [
+            {
+                name: 'fork',
+                type: 'line',
+                data: fork
+            },
+            {
+                name: 'star',
+                type: 'line',
+                data: star
+            }
+            ]
+        };
+
+        myChart.setOption(option); 
+
+        });
+
+    </script>  
+</body>
+</html>
