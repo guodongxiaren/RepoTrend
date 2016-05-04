@@ -52,7 +52,7 @@ class RepoTrend:
         self.trend["star"].append(star);
         
 if __name__ == "__main__":
-    repoTrend = RepoTrend("./config.json")
+    repoTrend = RepoTrend("./config.local.json")
     repoTrend.parse_json_file()
     repoTrend.get_remote_data()
     repoTrend.add_today_data()

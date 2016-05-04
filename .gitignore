@@ -1,5 +1,5 @@
-trend.json
-config.json
+trend.local.json
+config.local.json
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
