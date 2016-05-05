@@ -10,7 +10,7 @@
         text-align: center;
     }
     #main {
-        width: 600px;
+        width: 800px;
         height: 400px;
         margin-left: auto;
         margin-right: auto;
@@ -18,18 +18,25 @@
     </style>
 </head>
 <body>
-    <h1 id="repo-name"></h1>
+    <h1 id="repo-name">README 趋势图</h1>
     <div id="main"></div>  
     <script type="text/javascript">  
     var myChart = echarts.init(document.getElementById('main'));
 
     $.getJSON('trend.json', function(json) {
-        date = json.date;
-        fork = json.fork;
-        star = json.star;
+        var date = json.date;
+        var fork = json.fork;
+        var star = json.star;
+        var fork1 = [];
+        var star1 = [];
+        for (var i = 0; i < date.length; i++) {
+            fork1.push(fork[i] - fork[0]);
+            star1.push(star[i] - star[0]);
+
+        }
         var option = {
             title: {
-                text: '趋势图'
+                // text: '趋势图'
             },
             tooltip: {},
             legend: {
@@ -37,22 +44,24 @@
             },
             xAxis: {
                     splitLine: {show: false},
+                    boundaryGap: false,
                     data: date 
                 },
             yAxis: {
-                    name: 'fork',
+                    name: '(新增)',
+                    // splitNumber: 10,
                     type: 'value'
                 },
             series: [
             {
                 name: 'fork',
                 type: 'line',
-                data: fork
+                data: fork1
             },
             {
                 name: 'star',
                 type: 'line',
-                data: star
+                data: star1
             }
             ]
         };
